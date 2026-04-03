@@ -232,7 +232,7 @@ Once you configure POST order call with the endpoint URL you copied from the API
 
 **Go to CloudWatch to see the Logs captured**
 
-  ![img]()
+  ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Cloudwatch.png)
 
 ### Next..
 
@@ -243,10 +243,14 @@ Once you configure POST order call with the endpoint URL you copied from the API
 * _Create an account(if you are a new user)._
 * Login to your account.
 
-    ![img]()
+    ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents.png)
 
 #### Step 2: Install the Datadog CLI with NPM
+Go to Git Bash and execute AWS Configure steps to connect with AWS Account.Then execute below command
+
 _npm install -g @datadog/datadog-ci_
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents1.png)
 
 #### Step 3: Instrument your Lambda Functions- Run the Agent Installation Command
 _datadog-ci lambda instrument -i_
@@ -254,53 +258,86 @@ _datadog-ci lambda instrument -i_
 * Use the Datadog API key and site below when prompted:<br/>
   DD_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX <br/>
   DD_SITE="us5.datadoghq.com"
-  
-  ![img]()
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents2.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents3.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents4.png)
+
 
 #### Step 4: Invoke your newly instrumented functions
-Invoke your Lambda functions a few times to send real-time metrics, logs and traces to Datadog.
+Invoke your Lambda functions(From Postman as mentioned above) a few times to send real-time metrics, logs and traces to Datadog.
 
-* Go to Datadog Console and Select "Srverless " from the Recent Mueni in right window.
-  
-  ![img]()
+![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Postman.png)
+
+
+**Go to Datadog Console and Select "Serverless " from the Recent Menu in right window.**
+
+  ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Datadog%20Lambda%20Metrics0.png)
 
   Now we go to **APM->Services->Service Catalog**, because Lambda instrumentation will reflect as a service.
 
-  ![img]()
+  ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Datadog%20Lambda%20Metrics1.png)
 
+  ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Datadog%20Lambda%20Metrics2.png)
 
+  
 ### Datadog integration:
 
 **Now do the integration to my AWS Account**
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents.png)
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents1.png)
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents2.png)
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents3.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents4.png)
 
 **After successful integrations,Go to Datadog integrations and select AWS**
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Integrations1.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Integrations2.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Cloudformation-Integration.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Integrations3.png)
 
 **Go to configurations and select “Lambda AWS/Lambda and click Save**
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Post%20Integration%20Setup1.png)
 
 **Then go to Dashboard->Dashboard list and search Lambda and select "AWS Lambda (Enhanced Metrics)**
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Post%20Integration%20Setup2.png)
 
 #### Click AWS Lambda (Enhanced Metrics)
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Enhanced%20Metrics.png)
 
 **Go to Metrics summary**
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Metrics%20Summary.png)
 
 **Go to APM->Traces->explorer and select one trace ,open to see related logs generated**
 
-![img]()
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer1.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer2.png)
+
+
+**Review the Errors Details**
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Traces-Flame%20Graph.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Traces-Flame%20Graph1.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer3.png)
+
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer4.png)
 
