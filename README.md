@@ -1,24 +1,26 @@
-# Distributed tracing for AWS Lambda with Datadog APM
+# Distributed Tracing For AWS Lambda With Datadog APM (Application Performance Monitoring)
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/4a8ff6d588d831d372a31eed505e9d501ea99673/assets/Datadog.png)
 
-
-### What is Serverless?
+### Serverless
 Serverless is a cloud-native development model that allows developers to build and run applications without having to manage servers A serverless provider allows users to write and deploy code without the hassle of worrying about the underlying infrastructure. This model enhances scalability, increases developer productivity and helps to lower costs, as you only pay for the exact resources used during execution
 
+### Datadog
+Datadog is a cloud monitoring and observability platform.
+It tracks infrastructure, applications, logs, metrics, and traces across AWS, Kubernetes, serverless, and more. Real-time dashboards, alerts, and AI-powered insights help teams debug issues fast. Popular with DevOps for full-stack visibility.
 
-### Details of AWS Serverless Services used in this architecture
-### •	Amazon API Gateway 
-Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale. 
+### Datadog APM (Application Performance Monitoring)
+Datadog APM tracks and optimizes app performance end-to-end.<br/>
+**Core capabilities:<br/>**
+* Distributed tracing across microservices, serverless, Kubernetes<br/>
+* Code profiling to spot bottlenecks and memory leaks<br/>
+* Real-time latency, throughput, error rate dashboards<br/>
+* Auto-generated service dependency maps<br/>
 
-### •	AWS Lambda
-AWS Lambda is a compute service that can be used to run code without provisioning or managing servers. It runs code on a high-availability compute infrastructure, operates and maintains all of the compute resources languages and integrates seamlessly with other AWS services.
+Perfect for debugging Bedrock agents and production systems—finds slow DB queries or API timeouts instantly!
 
-### • DynamoDB
-DynamoDB a cloud-based, serverless, NoSQL database service that allows users to store and retrieve data at any scale
-
-### Purpose:
-Goal is to set up a serverless infrastructure using some key AWS services and run load tests in Postman by using CRUD operations to see how the system handles increased traffic and figure out how we can fine-tuning resources to enhance its performance(Avg. response time).
+## Purpose:
+**Goal:** Build serverless infra on AWS key services + instrumentation, then analyze distributed tracing for Lambda using Datadog APM.
 
 We create one resource (DynamoDBManager) and define one method (POST) on it. The method is backed by a Lambda function (LambdaFunctionOverHttps). That is, when you call the API through an HTTPS endpoint, Amazon API Gateway invokes the Lambda function.
 
@@ -28,6 +30,15 @@ The POST method on the DynamoDBManager resource supports the following DynamoDB 
 •	Scan an item.<br/>
 •	Other operations (echo, ping), not related to DynamoDB, that you can use for testing.
 
+### Details of AWS Serverless Services used in this architecture
+**Amazon API Gateway** <br/>
+Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale.<br/>
+
+**AWS Lambda** <br/>
+AWS Lambda is a compute service that can be used to run code without provisioning or managing servers. It runs code on a high-availability compute infrastructure, operates and maintains all of the compute resources languages and integrates seamlessly with other AWS services.<br/>
+
+**DynamoDB**<br/>
+DynamoDB a cloud-based, serverless, NoSQL database service that allows users to store and retrieve data at any scale.
 
 ### Setup
 Make sure all the AWS resource are created in the same region.
@@ -79,13 +90,13 @@ Make sure all the AWS resource are created in the same region.
 Go AWS Lambda Console, Dashboard and click Create function.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-Lambda.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-Lambda.png)
 
 
 In the Create function page, select Author from scratch and give function name as ‘LambdaFunctionOverHttps’. Choose runtime as Python 3.12 or the latest version, leave the architecture as default as x86_64, configure the Permission by selecting the ‘Use an existing role’ that you created earlier which is 'lambda-apigateway-role' and Click Create function.
 Once 'LambdaFunctionOverHttps’ got created, Function overview page for 'LambdaFunctionOverHttps' will show up as below:
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-Lambda2.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-Lambda2.png)
 
 
 1. Replace the default lambda code with the following code by copying and pasting the same code editor.
@@ -138,56 +149,56 @@ def lambda_handler(event, context):
     }
 }
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-Lambda3.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-Lambda3.png)
 
 
 Once the test event is created, click Test button and ‘echotest’ from select test event drop-down as shown in the diagram below, click on it. It will execute the test event and the result will show up right underneath the code editor.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Test-Lambda.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Test-Lambda.png)
 
 
 #### Step 3: Create DynamoDB Table
 Go to AWS DynamoDB console, click Create table. In the Create table page, give it Table name as 'lambda-apigateway' and partition key as id of type String as shown in the screen then click Create table button. 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-DynamoDB.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-DynamoDB.png)
 
 
 #### Step 4: Create API
 Go to the AWS API Gateway Console and click on Create API and under the REST API click Build button.
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-API.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-API.png)
 
 
 Enter API Name as 'DynamoDBOperations' and click ‘Create API’ button
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-API2.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-API2.png)
 
 
 Goto APIs Window,select and click ‘DynamoDBOperations’. In the Resources page, click Create resource button as shown in the below.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-API-Resource.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-API-Resource.png)
 
 
 And type the resource name as 'DynamoDBManager' and click Create resource button.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-API-Resource2.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-API-Resource2.png)
 
 
 In the Resource page, expand the resource, select the resource / DynamoDBManager and click on the Create method button on the right.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-API-Resource-method1.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-API-Resource-method1.png)
 
 
 Configure the Method details as shown below. The method of this API will be POST which will call the ‘LambdaFunctionOverHttps’  i.e. Lambda Function. 
 Make sure you have selected the region where you have created the 'LambdaFunctionOverHttps’  and the click Create method button.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Create-API-Resource-method2.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Create-API-Resource-method2.png)
 
 
 The method POST will show up as shown in the screen below. Now 'DynamoDBOperations’ ready with a / DynamoDBManager  resource with POST method
@@ -195,25 +206,24 @@ and we are ready deploy it in an environment such as dev, test, prod. Click Depl
 where you configure the deployment settings as shown below.
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Deploy-API.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Deploy-API.png)
 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/API-Stage.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/API-Stage.png)   
 
 
 Once the API is deployed, select the Stages on the left side and select the POST method as shown in the screenshot below. You will see Invoke URL
 and that's the URL its client or consumer application will use to essentially user our 'DynamoDBOperations’ . Now copy that URL and head over to Postman,
 a REST API testing application that you can download for free.
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/API-Stage-URL.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/API-Stage-URL.png)
 
 
 To execute our API from local machine, we are going to use Postman and Curl command. You can choose either method based on your convenience and familiarity. 
 
 To run this from Postman, select "POST" , paste the API invoke url. Then under "Body" select "raw" and paste the above JSON. Click "Send". 
 API should execute and return "HTTPStatusCode" 200.
-
-
+```
  {
    "operation": "create",
     "tableName": "lambda-apigateway",
@@ -224,13 +234,14 @@ API should execute and return "HTTPStatusCode" 200.
         }
     }
 }
+```
 
 Once you configure POST order call with the endpoint URL you copied from the API and payload above, click the Send button on top right corner. If everything goes well, it will call the 'DynamoDBOperations' --> 'LambdaFunctionOverHttps' --> 'lambda-apigateway' and it will return a standard 200 OK response as shown in the picture below. 
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Postman.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Postman.png)
 
 
-**Go to CloudWatch to see the Logs captured**
+### Go to CloudWatch to see the Logs captured
 
   ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Cloudwatch.png)
 
@@ -269,7 +280,7 @@ _datadog-ci lambda instrument -i_
 #### Step 4: Invoke your newly instrumented functions
 Invoke your Lambda functions(From Postman as mentioned above) a few times to send real-time metrics, logs and traces to Datadog.
 
-![image](https://github.com/Awadheshks/Serverless/blob/64ced97c60747cd814a1ee06fa5fba790a6482da/apigateway-lambda-dynamodb/assets/Postman.png)
+![image](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Postman.png)
 
 
 **Go to Datadog Console and Select "Serverless " from the Recent Menu in right window.**
@@ -283,7 +294,7 @@ Invoke your Lambda functions(From Postman as mentioned above) a few times to sen
   ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Datadog%20Lambda%20Metrics2.png)
 
   
-### Datadog integration:
+## Datadog Integrations:
 
 **Now do the integration to my AWS Account**
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents.png)
@@ -296,13 +307,13 @@ Invoke your Lambda functions(From Postman as mentioned above) a few times to sen
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Install%20Agents4.png)
 
-**After successful integrations,Go to Datadog integrations and select AWS**
+### For successful integrations,goto Datadog Setup->Integrations and select AWS as service provider
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Integrations1.png)
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Integrations2.png)
 
-![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Cloudformation-Integration.png)
+![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/d763786cddad189bdeb6a6ead360e34a76531de8/assets/Cloudformation-Integration.png)
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Integrations3.png)
 
@@ -310,7 +321,7 @@ Invoke your Lambda functions(From Postman as mentioned above) a few times to sen
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Post%20Integration%20Setup1.png)
 
-**Then go to Dashboard->Dashboard list and search Lambda and select "AWS Lambda (Enhanced Metrics)**
+### After successful integration, go to Dashboard->Dashboard list and search Lambda and select "AWS Lambda (Enhanced Metrics)
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Post%20Integration%20Setup2.png)
 
@@ -318,7 +329,7 @@ Invoke your Lambda functions(From Postman as mentioned above) a few times to sen
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Enhanced%20Metrics.png)
 
-**Go to Metrics summary**
+**Go to Metrics summary to review metrics**
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Metrics%20Summary.png)
 
@@ -327,6 +338,8 @@ Invoke your Lambda functions(From Postman as mentioned above) a few times to sen
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer.png)
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer1.png)
+
+**Review the Log Details**
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer2.png)
 
@@ -341,3 +354,11 @@ Invoke your Lambda functions(From Postman as mentioned above) a few times to sen
 
 ![img](https://github.com/Awadheshks/Observability-AWS-Lambda-with-Datadog-APM/blob/771c183210a1ff9589023774a4c3e05f70f38778/assets/Trace%20Explorer4.png)
 
+<br/><br/>
+
+
+
+### 🔍 Key Takeaways:
+**Serverless meets complete observability**<br/>
+* With native, end-to-end tracing now available for AWS Lambda through Datadog APM, you can get deep visibility into all your serverless functions, without adding any latency to your applications. 
+* Correlating traces with metrics and logs gives you the context you need to optimize application performance and troubleshoot complex production issues.
